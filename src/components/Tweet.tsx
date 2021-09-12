@@ -73,7 +73,7 @@ const Tweet = (props: Props) => {
                 </View>
                 <Text style={styles.breadText}>
                     Lorem ipsum dolor sit amet consectetur
-                    <Text style={styles.atMention}>@Ronaldo</Text> ipsa, modi maxime ipsam aliquam
+                    <Text style={styles.atMention}> @Ronaldo </Text>ipsa, modi maxime ipsam aliquam
                     ratione quaerat neque quod iste.
                 </Text>
                 <View style={styles.metadata}>

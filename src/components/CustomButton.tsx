@@ -4,7 +4,7 @@ import { useTheme } from '@context/ThemeContext'
 import colors from '@colors/colors'
 
 interface Props {
-    style: StyleProp<ViewStyle>
+    style?: StyleProp<ViewStyle>
     color?: 'accent' | 'opposite'
     onPress: () => void
     title: string
@@ -12,7 +12,6 @@ interface Props {
 }
 
 const CustomButton = ({ style, title, color = 'accent', onPress }: Props) => {
-    console.log(style)
     const { accentColor, theme } = useTheme()
 
     const styles = StyleSheet.create({
@@ -22,6 +21,8 @@ const CustomButton = ({ style, title, color = 'accent', onPress }: Props) => {
             paddingVertical: 10,
             borderRadius: 9999,
             textAlign: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
             fontWeight: '600',
         },
         text: {

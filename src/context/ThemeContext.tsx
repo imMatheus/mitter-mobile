@@ -28,9 +28,9 @@ interface Context {
 }
 
 const ThemeContext = createContext<Context>({
-    theme: 'dark',
+    theme: 'dimmed',
     setTheme: () => null,
-    colorPalette: colors['dark'],
+    colorPalette: colors['dimmed'],
     accentColor: 'pink',
     setAccentColor: () => {},
 })
@@ -43,7 +43,7 @@ export const ThemeProvider: React.FC = ({ children }) => {
     const { currentUser } = useAuth()
     console.log(currentUser)
 
-    const [theme, setTheme] = useState<Theme>((currentUser && currentUser.theme) || 'dark')
+    const [theme, setTheme] = useState<Theme>((currentUser && currentUser.theme) || 'dimmed')
     const [colorPalette, setColorPalette] = useState(colors[theme])
     const [accentColor, setAccentColor] = useState<AccentColor>('pink')
 
