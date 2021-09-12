@@ -8,6 +8,7 @@ module.exports = function (api) {
                 {
                     alias: {
                         '@colors': './src/colors',
+                        '@components': './src/components',
                         '@context': './src/context',
                         '@hooks': './src/hooks',
                         '@screens': './src/screens',

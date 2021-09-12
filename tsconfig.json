@@ -5,6 +5,7 @@
         "baseUrl": "src",
         "paths": {
             "@colors/*": ["colors/*"],
+            "@components/*": ["components/*"],
             "@context/*": ["context/*"],
             "@hooks/*": ["hooks/*"],
             "@screens/*": ["screens/*"],

@@ -1,6 +1,6 @@
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, SafeAreaView, View } from 'react-native'
 import Home from '@screens/Home'
 import { useTheme } from '@context/ThemeContext'
 import colors from '@colors/colors'
@@ -15,8 +15,10 @@ const Controller = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar style='auto' />
-            <Home />
+            <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
+            <SafeAreaView style={styles.container}>
+                <Home />
+            </SafeAreaView>
         </View>
     )
 }

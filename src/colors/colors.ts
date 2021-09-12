@@ -23,7 +23,7 @@ const colors = {
         colorTextDimmed: '#8899a6',
         colorTextDimmed15: '#8899a626',
         colorTextDimmed20: '#8899a633',
-        colorBorder: '#eff3f4',
+        colorBorder: '#2f3336',
     },
     dark: {
         background: '#000000',
