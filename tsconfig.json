@@ -1,6 +1,15 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true
-  }
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "strict": true,
+        "baseUrl": "src",
+        "paths": {
+            "@colors/*": ["colors/*"],
+            "@context/*": ["context/*"],
+            "@hooks/*": ["hooks/*"],
+            "@screens/*": ["screens/*"],
+            "@types/*": ["types/*"],
+            "@utils/*": ["utils/*"]
+        }
+    }
 }

@@ -1,0 +1,51 @@
+const colors = {
+    light: {
+        background: '#ffffff',
+        backgroundSecond: '#eff3f4',
+        backgroundLight: '#cfd9de',
+        backgroundHover: '#f7f9f9',
+        backgroundDimmed: '#0f14191a',
+        colorText: '#0f1419',
+        colorTextLight: '#0f1419',
+        colorTextDimmed: '#52636f',
+        colorTextDimmed15: '#52636f26',
+        colorTextDimmed20: '#52636f33',
+        colorBorder: '#eff3f4',
+    },
+    dimmed: {
+        background: '#15202b',
+        backgroundSecond: '#3d5466',
+        backgroundLight: '#536471',
+        backgroundHover: '#192734',
+        backgroundDimmed: '#253341',
+        colorText: '#ffffff',
+        colorTextLight: '#eff3f4',
+        colorTextDimmed: '#8899a6',
+        colorTextDimmed15: '#8899a626',
+        colorTextDimmed20: '#8899a633',
+        colorBorder: '#eff3f4',
+    },
+    dark: {
+        background: '#000000',
+        backgroundSecond: '#2f3336',
+        backgroundLight: '#536471',
+        backgroundHover: '#1c1f23',
+        backgroundDimmed: '#202327',
+        colorText: '#d9d9d9',
+        colorTextLight: '#eff3f4',
+        colorTextDimmed: '#6e767d',
+        colorTextDimmed15: '#6e767d26',
+        colorTextDimmed20: '#6e767d33',
+        colorBorder: '#2f3336',
+    },
+}
+
+export const accentColors = {
+    blue: '#1d9bf0',
+    yellow: '#ffd400',
+    pink: '#f91880',
+    purple: '#7856ff',
+    orange: '#ff7a00',
+    green: '#00ba7c',
+}
+export default colors
