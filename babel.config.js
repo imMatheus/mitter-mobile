@@ -14,6 +14,7 @@ module.exports = function (api) {
                         '@screens': './src/screens',
                         '@types': './src/types',
                         '@utils': './src/utils',
+                        '@firebaseConfig': './src/firebaseConfig',
                     },
                 },
             ],

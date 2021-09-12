@@ -1,12 +1,35 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import colors, { accentColors } from '@colors/colors'
 import { useTheme } from '@context/ThemeContext'
-import { AntDesign } from '@expo/vector-icons'
-interface Props {}
+import { AntDesign, EvilIcons } from '@expo/vector-icons'
+import firebase from 'firebase/app'
+import getDateSincePost from '@utils/getDateSincePost'
+interface Props {
+    text: string
+    name: string
+    userName: string
+    numberOfComments: number
+    numberOfLikes: number
+    numberOfRetweets: number
+    profileImage: string
+    createdAt: firebase.firestore.Timestamp
+}
 
-const Tweet = (props: Props) => {
+const Tweet = ({
+    text,
+    name,
+    userName,
+    numberOfComments,
+    numberOfLikes,
+    numberOfRetweets,
+    profileImage,
+    createdAt,
+}: Props) => {
     const { theme, accentColor } = useTheme()
+    let postSecs = Math.floor(createdAt.toMillis() / 1000)
+
+    let date = getDateSincePost(postSecs)
 
     const styles = StyleSheet.create({
         container: {
@@ -17,7 +40,6 @@ const Tweet = (props: Props) => {
             flexDirection: 'row',
         },
         imageWrapper: {
-            backgroundColor: 'red',
             width: 38,
             height: 38,
             borderRadius: 9999,
@@ -54,7 +76,7 @@ const Tweet = (props: Props) => {
             flexDirection: 'row',
         },
         metadataText: {
-            marginLeft: 5,
+            marginLeft: 6,
             color: colors[theme].colorTextDimmed,
             fontSize: 13,
         },
@@ -63,31 +85,39 @@ const Tweet = (props: Props) => {
         },
     })
 
+    // <Text style={styles.atMention}> @Ronaldo </Text>
     return (
         <View style={styles.container}>
-            <View style={styles.imageWrapper}></View>
+            <View style={styles.imageWrapper}>
+                <Image
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: 9999,
+                    }}
+                    source={{ uri: profileImage }}
+                />
+            </View>
             <View style={styles.content}>
                 <View style={styles.header}>
-                    <Text style={styles.title}>Gerad Piqué</Text>
-                    <Text style={styles.subtitle}>@3geradpiqué - 2d</Text>
+                    <Text style={styles.title}>{name}</Text>
+                    <Text style={styles.subtitle}>
+                        @{userName} - {date}
+                    </Text>
                 </View>
-                <Text style={styles.breadText}>
-                    Lorem ipsum dolor sit amet consectetur
-                    <Text style={styles.atMention}> @Ronaldo </Text>ipsa, modi maxime ipsam aliquam
-                    ratione quaerat neque quod iste.
-                </Text>
+                <Text style={styles.breadText}>{text}</Text>
                 <View style={styles.metadata}>
                     <View style={styles.metadataSpan}>
-                        <AntDesign name='hearto' size={17} color={colors[theme].colorTextDimmed} />
+                        <EvilIcons name='comment' size={20} color={colors[theme].colorTextDimmed} />
+                        <Text style={styles.metadataText}>{numberOfComments}</Text>
+                    </View>
+                    <View style={styles.metadataSpan}>
+                        <EvilIcons name='retweet' size={20} color={colors[theme].colorTextDimmed} />
                         <Text style={styles.metadataText}>231</Text>
                     </View>
                     <View style={styles.metadataSpan}>
                         <AntDesign name='hearto' size={17} color={colors[theme].colorTextDimmed} />
-                        <Text style={styles.metadataText}>231</Text>
-                    </View>
-                    <View style={styles.metadataSpan}>
-                        <AntDesign name='hearto' size={17} color={colors[theme].colorTextDimmed} />
-                        <Text style={styles.metadataText}>231</Text>
+                        <Text style={styles.metadataText}>{numberOfLikes}</Text>
                     </View>
                 </View>
             </View>

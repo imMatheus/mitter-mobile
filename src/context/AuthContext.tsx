@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import firebase from 'firebase/app'
-import { auth, fs } from '../firebase/firebase'
+import { auth, fs } from '../firebaseConfig/firebase'
 import User from '../types/User'
 import getNameCombinations from '../utils/getNameCombinations'
 

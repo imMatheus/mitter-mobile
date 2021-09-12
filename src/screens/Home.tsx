@@ -1,13 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native'
 import getNameCombinations from '@utils/getNameCombinations'
 import colors, { accentColors } from '@colors/colors'
 import { useTheme } from '@context/ThemeContext'
 import Tweet from '@components/Tweet'
+import { fs } from '@firebaseConfig/firebase'
 
 const Home = () => {
     const { theme, accentColor } = useTheme()
+    const [tweets, setTweets] = useState<any>([])
+    const tweetsRef = fs.collectionGroup('tweets')
 
+    useEffect(() => {
+        tweetsRef
+            .orderBy('numberOfLikes', 'desc')
+            .limit(50)
+            .get()
+            .then(async (documentSnapshots: any) => {
+                let g: any = []
+                documentSnapshots.docs.forEach((doc: any) => {
+                    g.push(doc.data())
+                })
+                setTweets((c: any) => c.concat(g))
+            })
+    }, [])
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -25,27 +41,22 @@ const Home = () => {
     return (
         <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
-                <Tweet />
+                {tweets.length > 0 &&
+                    tweets.map((tweet: any, index: number) => {
+                        return (
+                            <Tweet
+                                createdAt={tweet.date}
+                                profileImage={tweet.profileImage}
+                                key={index}
+                                text={tweet.text}
+                                name={tweet.name}
+                                numberOfComments={tweet.numberOfComments}
+                                numberOfRetweets={tweet.numberOfRetweets}
+                                numberOfLikes={tweet.numberOfLikes}
+                                userName={tweet.displayName}
+                            />
+                        )
+                    })}
             </ScrollView>
         </View>
     )

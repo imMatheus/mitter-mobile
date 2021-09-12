@@ -10,7 +10,8 @@
             "@hooks/*": ["hooks/*"],
             "@screens/*": ["screens/*"],
             "@types/*": ["types/*"],
-            "@utils/*": ["utils/*"]
+            "@utils/*": ["utils/*"],
+            "@firebaseConfig": ["firebaseConfig/*"]
         }
     }
 }
