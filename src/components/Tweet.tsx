@@ -1,10 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import colors, { accentColors } from '@colors/colors'
 import { useTheme } from '@context/ThemeContext'
 import { AntDesign, EvilIcons } from '@expo/vector-icons'
 import firebase from 'firebase/app'
 import getDateSincePost from '@utils/getDateSincePost'
+
 interface Props {
     text: string
     name: string
@@ -14,6 +15,7 @@ interface Props {
     numberOfRetweets: number
     profileImage: string
     createdAt: firebase.firestore.Timestamp
+    goToUser: () => void
 }
 
 const Tweet = ({
@@ -25,6 +27,7 @@ const Tweet = ({
     numberOfRetweets,
     profileImage,
     createdAt,
+    goToUser,
 }: Props) => {
     const { theme, accentColor } = useTheme()
     let postSecs = Math.floor(createdAt.toMillis() / 1000)
@@ -86,9 +89,10 @@ const Tweet = ({
     })
 
     // <Text style={styles.atMention}> @Ronaldo </Text>
+    
     return (
         <View style={styles.container}>
-            <View style={styles.imageWrapper}>
+            <Pressable onPress={goToUser} style={styles.imageWrapper}>
                 <Image
                     style={{
                         width: '100%',
@@ -97,7 +101,7 @@ const Tweet = ({
                     }}
                     source={{ uri: profileImage }}
                 />
-            </View>
+            </Pressable>
             <View style={styles.content}>
                 <View style={styles.header}>
                     <Text style={styles.title}>{name}</Text>

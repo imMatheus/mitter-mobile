@@ -6,22 +6,28 @@ import { useTheme } from '@context/ThemeContext'
 import Tweet from '@components/Tweet'
 import { fs } from '@firebaseConfig/firebase'
 
-const Home = () => {
+const Home = ({ navigation }: any) => {
     const { theme, accentColor } = useTheme()
     const [tweets, setTweets] = useState<any>([])
     const tweetsRef = fs.collectionGroup('tweets')
 
+    const goToProfile = (id: string) => {
+        navigation.navigate('Profile', {
+            id,
+        })
+    }
+
     useEffect(() => {
         tweetsRef
             .orderBy('numberOfLikes', 'desc')
-            .limit(50)
+            .limit(2)
             .get()
             .then(async (documentSnapshots: any) => {
                 let g: any = []
                 documentSnapshots.docs.forEach((doc: any) => {
                     g.push(doc.data())
                 })
-                setTweets((c: any) => c.concat(g))
+                setTweets(g)
             })
     }, [])
     const styles = StyleSheet.create({
@@ -42,12 +48,13 @@ const Home = () => {
         <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
                 {tweets.length > 0 &&
-                    tweets.map((tweet: any, index: number) => {
+                    tweets.map((tweet: any) => {
                         return (
                             <Tweet
+                                goToUser={() => goToProfile(tweet.authorId)}
                                 createdAt={tweet.date}
                                 profileImage={tweet.profileImage}
-                                key={index}
+                                key={tweet.authorId}
                                 text={tweet.text}
                                 name={tweet.name}
                                 numberOfComments={tweet.numberOfComments}
