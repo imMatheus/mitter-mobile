@@ -2,7 +2,7 @@ import React from 'react'
 import Controller from './src/Controller'
 import { AuthProvider } from '@context/AuthContext'
 import { ThemeProvider } from '@context/ThemeContext'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 export default function App() {
     return (
@@ -10,6 +10,9 @@ export default function App() {
             <ThemeProvider>
                 <View style={{ flex: 1 }}>
                     <Controller />
+                    {/* <View>
+                        <Text>hellos</Text>
+                    </View> */}
                 </View>
             </ThemeProvider>
         </AuthProvider>
