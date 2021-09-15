@@ -4,7 +4,8 @@ import getNameCombinations from '@utils/getNameCombinations'
 import colors, { accentColors } from '@colors/colors'
 import { useTheme } from '@context/ThemeContext'
 import Tweet from '@components/Tweet'
-import { fs } from '@firebaseConfig/firebase'
+import TweetsList from '@components/TweetsList'
+import { fs } from '../firebaseConfig/firebase'
 
 const Home = ({ navigation }: any) => {
     const { theme, accentColor } = useTheme()
@@ -19,13 +20,13 @@ const Home = ({ navigation }: any) => {
 
     useEffect(() => {
         tweetsRef
-            .orderBy('numberOfLikes', 'desc')
-            .limit(2)
+            // .orderBy('numberOfLikes', 'desc')
+            .limit(120)
             .get()
             .then(async (documentSnapshots: any) => {
                 let g: any = []
                 documentSnapshots.docs.forEach((doc: any) => {
-                    g.push(doc.data())
+                    g.push({ ...doc.data(), id: doc.id })
                 })
                 setTweets(g)
             })
@@ -46,25 +47,7 @@ const Home = ({ navigation }: any) => {
     })
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-                {tweets.length > 0 &&
-                    tweets.map((tweet: any) => {
-                        return (
-                            <Tweet
-                                goToUser={() => goToProfile(tweet.authorId)}
-                                createdAt={tweet.date}
-                                profileImage={tweet.profileImage}
-                                key={tweet.authorId}
-                                text={tweet.text}
-                                name={tweet.name}
-                                numberOfComments={tweet.numberOfComments}
-                                numberOfRetweets={tweet.numberOfRetweets}
-                                numberOfLikes={tweet.numberOfLikes}
-                                userName={tweet.displayName}
-                            />
-                        )
-                    })}
-            </ScrollView>
+            <TweetsList tweets={tweets} goToProfile={goToProfile} />
         </View>
     )
 }

@@ -9,9 +9,9 @@
             "@context/*": ["context/*"],
             "@hooks/*": ["hooks/*"],
             "@screens/*": ["screens/*"],
-            "@types/*": ["types/*"],
+            "@customTypes/*": ["types/*"],
             "@utils/*": ["utils/*"],
-            "@firebaseConfig": ["firebaseConfig/*"]
+            "@firebaseInit": ["firebaseConfig/*"]
         }
     }
 }

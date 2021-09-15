@@ -1,17 +1,46 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
 import { useTheme } from '@context/ThemeContext'
 import colors, { accentColors } from '@colors/colors'
 import CustomButton from '@components/CustomButton'
 import { AntDesign, Feather, Ionicons, FontAwesome5 } from '@expo/vector-icons'
+import Tweet from '@components/Tweet'
 
-interface Props {}
+import { fs } from '../firebaseConfig/firebase'
+import User from '@customTypes/User'
+import TweetsList from '@components/TweetsList'
 
-const Profile = (props: Props) => {
+const Profile = ({ navigation, route }: any) => {
+    const { id: currentUserId } = route.params
+    console.log('params')
+    const [fetchedUser, setFetchedUser] = useState<User | null>(null)
+    const [usersTweets, setUsersTweets] = useState<any>([])
+    console.log(currentUserId)
+    useEffect(() => {
+        fs.doc(`users/${currentUserId}`)
+            .get()
+            .then((user: any) => {
+                console.log(user.data())
+                setFetchedUser(user.data())
+            })
+        fs.collection(`users/${currentUserId}/tweets`)
+            .get()
+            .then((t: any) => {
+                setUsersTweets(t.docs.map((r: any) => r.data()))
+            })
+    }, [])
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: 'hej',
+        })
+    }, [navigation])
     const { theme, accentColor } = useTheme()
     const styles = StyleSheet.create({
         metadataContainer: {
-            marginHorizontal: 14,
+            paddingHorizontal: 14,
+            paddingBottom: 14,
+            borderBottomColor: colors[theme].colorBorder,
+            borderBottomWidth: 1,
         },
         headerContainer: {
             flexDirection: 'row',
@@ -82,16 +111,16 @@ const Profile = (props: Props) => {
             marginRight: 4,
         },
     })
-
+    if (!fetchedUser) return <Text>shiba</Text>
     return (
-        <View>
+        <ScrollView>
             <View style={styles.metadataContainer}>
                 <View style={styles.headerContainer}>
                     <View style={styles.profileImageContainer}>
                         <Image
                             style={styles.profileImage}
                             source={{
-                                uri: 'https://cdn.fakercloud.com/avatars/justinrhee_128.jpg',
+                                uri: fetchedUser.profileImage,
                             }}
                         />
                     </View>
@@ -103,12 +132,9 @@ const Profile = (props: Props) => {
                         />
                     </View>
                 </View>
-                <Text style={styles.userName}>CoinMarketCap</Text>
-                <Text style={styles.displayName}>@CoinMarketCap</Text>
-                <Text style={styles.bioText}>
-                    Lorem ipsum adipisicing elit. Alias voluptas inventore veritatis dolorum officia
-                    tenetur odit perferendis unde quia numquam.
-                </Text>
+                <Text style={styles.userName}>{fetchedUser.name}</Text>
+                <Text style={styles.displayName}>@{fetchedUser.displayName}</Text>
+                <Text style={styles.bioText}>{fetchedUser.bio}</Text>
 
                 <View style={[styles.rowWrapper, styles.textWithIconWrapper]}>
                     <AntDesign
@@ -127,7 +153,7 @@ const Profile = (props: Props) => {
                             color={colors[theme].colorTextDimmed}
                             style={styles.lightMarginRight}
                         />
-                        <Text style={styles.lightText}>Rio de janeiro, Brasil</Text>
+                        <Text style={styles.lightText}>{fetchedUser.location}</Text>
                     </View>
                     <View style={[styles.textWithIconWrapper, styles.marginRight]}>
                         <Feather
@@ -136,7 +162,7 @@ const Profile = (props: Props) => {
                             color={colors[theme].colorTextDimmed}
                             style={styles.lightMarginRight}
                         />
-                        <Text style={styles.linkText}>ppathole.github.io/My-Profile</Text>
+                        <Text style={styles.linkText}>{fetchedUser.url}</Text>
                     </View>
                     <View style={[styles.textWithIconWrapper, styles.marginRight]}>
                         <FontAwesome5
@@ -150,19 +176,21 @@ const Profile = (props: Props) => {
                 </View>
                 <View style={styles.rowWrapper}>
                     <Text style={[styles.lightText, styles.marginRight]}>
-                        <Text style={styles.filledText}>69 937 </Text>
+                        <Text style={styles.filledText}>{fetchedUser.amountOfFollowers}</Text>
                         Följare
                     </Text>
                     <Text style={styles.lightText}>
-                        <Text style={styles.filledText}>69 937 </Text>
-                        Följare
+                        <Text style={styles.filledText}>{fetchedUser.amountOfFollowing}</Text>
+                        Följer
                     </Text>
                 </View>
                 <View style={styles.rowWrapper}>
                     <Text style={styles.lightText}>Följs inte av någon som du följer</Text>
                 </View>
             </View>
-        </View>
+
+            <TweetsList tweets={usersTweets} goToProfile={() => null} />
+        </ScrollView>
     )
 }
 

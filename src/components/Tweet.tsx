@@ -5,18 +5,7 @@ import { useTheme } from '@context/ThemeContext'
 import { AntDesign, EvilIcons } from '@expo/vector-icons'
 import firebase from 'firebase/app'
 import getDateSincePost from '@utils/getDateSincePost'
-
-interface Props {
-    text: string
-    name: string
-    userName: string
-    numberOfComments: number
-    numberOfLikes: number
-    numberOfRetweets: number
-    profileImage: string
-    createdAt: firebase.firestore.Timestamp
-    goToUser: () => void
-}
+import { default as TweetType } from '@customTypes/Tweet'
 
 const Tweet = ({
     text,
@@ -28,7 +17,7 @@ const Tweet = ({
     profileImage,
     createdAt,
     goToUser,
-}: Props) => {
+}: TweetType) => {
     const { theme, accentColor } = useTheme()
     let postSecs = Math.floor(createdAt.toMillis() / 1000)
 
@@ -89,7 +78,7 @@ const Tweet = ({
     })
 
     // <Text style={styles.atMention}> @Ronaldo </Text>
-    
+
     return (
         <View style={styles.container}>
             <Pressable onPress={goToUser} style={styles.imageWrapper}>

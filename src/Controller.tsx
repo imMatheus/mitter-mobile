@@ -32,12 +32,13 @@ const Controller = () => {
         <NavigationContainer
             style={styles.container}
             theme={{
+                // @ts-ignore
                 colors: {
                     text: colors[theme].colorText,
                     background: colors[theme].background,
                 },
             }}
-            initialRouteName='Home'
+            initialRouteName='HomeNavigator'
         >
             <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
             {/* <Stack.Navigator>
@@ -76,7 +77,7 @@ const Controller = () => {
             >
                 {/* <SafeAreaView style={styles.container}> */}
                 <Tab.Screen
-                    name='Home'
+                    name='HomeNavigator'
                     component={HomeNavigator}
                     initialParams={{ iconName: 'home' }}
                 />
