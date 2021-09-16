@@ -1,23 +1,17 @@
 import React, { useRef, ReactElement, useState } from 'react'
-import { StyleSheet, Text, View, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native'
 import colors, { accentColors } from '@colors/colors'
 import { useTheme } from '@context/ThemeContext'
 import { Feather } from '@expo/vector-icons'
 
-// interface Props {
-//     setQueryString: React.Dispatch<React.SetStateAction<string>>
-// }
+interface Props {
+    setQueryString: React.Dispatch<React.SetStateAction<string>>
+}
 
 // { setQueryString }: Props
-export default function SearchBar(): ReactElement {
+export default function SearchBar({ setQueryString }: Props): ReactElement {
     const { theme } = useTheme()
-    const searchRef = useRef<HTMLInputElement>(null)
-    const [search, setSearch] = useState('')
-    const querySearch = () => {
-        if (searchRef.current) {
-            // setQueryString(searchRef.current.value.toLowerCase())
-        }
-    }
+    const inputRef = useRef<TextInput>(null)
 
     const styles = StyleSheet.create({
         container: {
@@ -28,22 +22,27 @@ export default function SearchBar(): ReactElement {
             flexDirection: 'row',
             backgroundColor: colors[theme].backgroundDimmed,
         },
+        icon: {
+            flexGrow: 0,
+        },
         textInput: {
             marginLeft: 10,
             color: colors[theme].colorText,
+            backgroundColor: 'red',
+            flex: 1,
         },
     })
 
     return (
-        <View style={styles.container}>
-            <Feather name='search' size={20} color={colors[theme].colorText} />
+        <Pressable style={styles.container} onPress={() => inputRef.current!.focus()}>
+            <Feather name='search' size={20} color={colors[theme].colorText} style={styles.icon} />
             <TextInput
+                ref={inputRef}
                 style={styles.textInput}
                 placeholder='Search mitter...'
-                value={search}
                 returnKeyType='search'
-                onChangeText={setSearch}
+                onChangeText={setQueryString}
             />
-        </View>
+        </Pressable>
     )
 }

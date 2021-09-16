@@ -11,6 +11,7 @@
             "@screens/*": ["screens/*"],
             "@customTypes/*": ["types/*"],
             "@utils/*": ["utils/*"],
+            "@params/*": ["params/*"],
             "@firebaseInit": ["firebaseConfig/*"]
         }
     }

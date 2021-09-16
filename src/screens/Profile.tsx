@@ -4,15 +4,13 @@ import { useTheme } from '@context/ThemeContext'
 import colors, { accentColors } from '@colors/colors'
 import CustomButton from '@components/CustomButton'
 import { AntDesign, Feather, Ionicons, FontAwesome5 } from '@expo/vector-icons'
-import Tweet from '@components/Tweet'
-
+import { HomeStackNavProps } from '../params/HomeParamList'
 import { fs } from '../firebaseConfig/firebase'
 import User from '@customTypes/User'
 import TweetsList from '@components/TweetsList'
 
-const Profile = ({ navigation, route }: any) => {
+const Profile = ({ navigation, route }: HomeStackNavProps<'Profile'>) => {
     const { id: currentUserId } = route.params
-    console.log('params')
     const [fetchedUser, setFetchedUser] = useState<User | null>(null)
     const [usersTweets, setUsersTweets] = useState<any>([])
     console.log(currentUserId)

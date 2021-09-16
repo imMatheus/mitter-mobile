@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 
-export default interface User extends firebase.User {
+type User = {
     uid: string
     email: string
     name: string
@@ -13,4 +13,7 @@ export default interface User extends firebase.User {
     amountOfFollowers: number
     amountOfFollowing: number
     theme: 'light' | 'dimmed' | 'dark'
-}
+} & firebase.User &
+    firebase.firestore.DocumentData
+
+export default User

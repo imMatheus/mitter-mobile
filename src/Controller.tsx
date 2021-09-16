@@ -1,21 +1,19 @@
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Image, Pressable } from 'react-native'
-import Home from '@screens/Home'
 import { useTheme } from '@context/ThemeContext'
-import Profile from '@screens/Profile'
 import colors from '@colors/colors'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import 'react-native-gesture-handler'
-//import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabBar from '@components/TabBar'
 import Search from '@screens/Search'
 import Messages from '@screens/Messages'
 import HomeNavigator from './navigators/HomeNavigator'
+import { ControllerParamList } from './params/ControllerParamList'
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<ControllerParamList>()
 
 const Controller = () => {
     const { theme } = useTheme()
@@ -28,7 +26,6 @@ const Controller = () => {
     })
 
     return (
-        // <View style={styles.container}>
         <NavigationContainer
             style={styles.container}
             theme={{
@@ -41,9 +38,6 @@ const Controller = () => {
             initialRouteName='HomeNavigator'
         >
             <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
-            {/* <Stack.Navigator>
-                </Stack.Navigator> */}
-            {/* <Stack.Screen name='User' component={Profile} /> */}
 
             <Tab.Navigator
                 tabBar={(props) => {
@@ -59,8 +53,8 @@ const Controller = () => {
                         >
                             <Image
                                 style={{
-                                    width: 34,
-                                    height: 34,
+                                    width: 35,
+                                    height: 35,
                                     backgroundColor: '#3066d1',
                                     borderRadius: 9999,
                                 }}
@@ -75,9 +69,8 @@ const Controller = () => {
                     },
                 }}
             >
-                {/* <SafeAreaView style={styles.container}> */}
                 <Tab.Screen
-                    name='HomeNavigator'
+                    name='Home'
                     component={HomeNavigator}
                     initialParams={{ iconName: 'home' }}
                 />
@@ -86,20 +79,14 @@ const Controller = () => {
                     component={Search}
                     initialParams={{ iconName: 'search' }}
                 />
-                <Tab.Screen
-                    name='Profile'
-                    component={Profile}
-                    initialParams={{ iconName: 'user' }}
-                />
+
                 <Tab.Screen
                     name='Messages'
                     component={Messages}
                     initialParams={{ iconName: 'message-square' }}
                 />
-                {/* </SafeAreaView> */}
             </Tab.Navigator>
         </NavigationContainer>
-        // </View>
     )
 }
 

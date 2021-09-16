@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Button, ScrollView } from 'react-native'
-import getNameCombinations from '@utils/getNameCombinations'
+import { StyleSheet, View } from 'react-native'
 import colors, { accentColors } from '@colors/colors'
 import { useTheme } from '@context/ThemeContext'
-import Tweet from '@components/Tweet'
 import TweetsList from '@components/TweetsList'
 import { fs } from '../firebaseConfig/firebase'
-
-const Home = ({ navigation }: any) => {
+import { HomeStackNavProps } from '../params/HomeParamList'
+//34:35
+//53:20
+//1:12:00
+//1:17:34
+const Feed = ({ navigation }: HomeStackNavProps<'Feed'>) => {
     const { theme, accentColor } = useTheme()
     const [tweets, setTweets] = useState<any>([])
     const tweetsRef = fs.collectionGroup('tweets')
@@ -52,4 +54,4 @@ const Home = ({ navigation }: any) => {
     )
 }
 
-export default Home
+export default Feed
