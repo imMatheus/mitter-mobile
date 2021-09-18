@@ -16,7 +16,7 @@ const Feed = ({ navigation }: HomeStackNavProps<'Feed'>) => {
 
     const goToProfile = (id: string) => {
         navigation.navigate('Profile', {
-            id,
+            id: id,
         })
     }
 
@@ -26,13 +26,15 @@ const Feed = ({ navigation }: HomeStackNavProps<'Feed'>) => {
             .limit(120)
             .get()
             .then(async (documentSnapshots: any) => {
-                let g: any = []
-                documentSnapshots.docs.forEach((doc: any) => {
-                    g.push({ ...doc.data(), id: doc.id })
-                })
-                setTweets(g)
+                setTweets(
+                    documentSnapshots.docs.map((doc: any) => ({
+                        ...doc.data(),
+                        id: doc.id,
+                    }))
+                )
             })
     }, [])
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -47,6 +49,8 @@ const Feed = ({ navigation }: HomeStackNavProps<'Feed'>) => {
             // backgroundColor: 'red',
         },
     })
+    console.log(tweets[1])
+
     return (
         <View style={styles.container}>
             <TweetsList tweets={tweets} goToProfile={goToProfile} />

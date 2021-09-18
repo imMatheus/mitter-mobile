@@ -10,11 +10,12 @@ import { default as TweetType } from '@customTypes/Tweet'
 const Tweet = ({
     text,
     name,
-    userName,
+    displayName,
     numberOfComments,
     numberOfLikes,
     numberOfRetweets,
     profileImage,
+    authorId,
     createdAt,
     goToUser,
 }: TweetType) => {
@@ -81,7 +82,13 @@ const Tweet = ({
 
     return (
         <View style={styles.container}>
-            <Pressable onPress={goToUser} style={styles.imageWrapper}>
+            <Pressable
+                onPress={() => {
+                    goToUser(authorId)
+                    console.log('authorId', authorId)
+                }}
+                style={styles.imageWrapper}
+            >
                 <Image
                     style={{
                         width: '100%',
@@ -95,7 +102,7 @@ const Tweet = ({
                 <View style={styles.header}>
                     <Text style={styles.title}>{name}</Text>
                     <Text style={styles.subtitle}>
-                        @{userName} - {date}
+                        @{displayName} - {date}
                     </Text>
                 </View>
                 <Text style={styles.breadText}>{text}</Text>

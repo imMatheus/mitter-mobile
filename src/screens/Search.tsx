@@ -7,7 +7,6 @@ import SearchResults from '@components/SearchResults'
 import useDebounce from '@hooks/useDebounce'
 import { fs } from '../firebaseConfig/firebase'
 import User from '@customTypes/User'
-import firebase from 'firebase/app'
 
 const Search = ({ navigation }: SearchStackNavProps<'Search'>) => {
     const [queryString, setQueryString] = useState('')
@@ -25,16 +24,12 @@ const Search = ({ navigation }: SearchStackNavProps<'Search'>) => {
 
             await fs
                 .collection('users')
-                // .where('disassembledDisplayName', 'array-contains-any', [queryString])
+                .where('disassembledDisplayName', 'array-contains', queryString.toLowerCase())
                 .get()
                 .then(async (documentSnapshots: any) => {
-                    let g: any = ['hej']
-                    documentSnapshots.docs.forEach((doc: any) => {
-                        g.push({ ...doc.data(), id: doc.id })
-                    })
-                    console.log(g)
-
-                    setQueriedUsers(g)
+                    setQueriedUsers(
+                        documentSnapshots.docs.map((doc: any) => ({ ...doc.data(), uid: doc.id }))
+                    )
                     if (documentSnapshots.empty) return setQueriedUsers([])
                 })
             setLoading(false)
@@ -47,7 +42,7 @@ const Search = ({ navigation }: SearchStackNavProps<'Search'>) => {
             <Text>search: {queryString}</Text>
             <Text>length: {queriedUsers.length}</Text>
 
-            <SearchResults queriedUsers={queriedUsers} />
+            <SearchResults navigation={navigation} queriedUsers={queriedUsers} />
         </View>
     )
 }

@@ -1,13 +1,15 @@
 import firebase from 'firebase/app'
 
 export default interface Tweet {
-    goToUser: () => void
+    authorId: string
     createdAt: firebase.firestore.Timestamp
-    profileImage: string
-    text: string
+    displayName: string
     name: string
     numberOfComments: number
-    numberOfRetweets: number
     numberOfLikes: number
-    userName: string
+    numberOfRetweets: number
+    profileImage: string
+    text: string
+    id: string
+    goToUser: (id: string) => void
 }

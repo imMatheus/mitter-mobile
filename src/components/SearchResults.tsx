@@ -3,23 +3,36 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import colors from '@colors/colors'
 import User from '@customTypes/User'
+import { SearchStackNavProps } from '../params/SearchParamList'
 interface SearchResultsProps {
     queriedUsers: User[]
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ queriedUsers }) => {
+type Props = SearchResultsProps & SearchStackNavProps<'Search'>
+const SearchResults: React.FC<Props> = ({ navigation, queriedUsers }) => {
     const { theme } = useTheme()
 
     const UserResult = ({
         profileImage,
         name,
         displayName,
+        uid,
     }: {
         profileImage: string
         name: string
         displayName: string
+        uid: string
     }) => (
-        <Pressable style={styles.container}>
+        <Pressable
+            style={styles.container}
+            onPress={() => {
+                navigation.navigate('Profile', {
+                    id: uid,
+                })
+
+                console.log('uid:', uid)
+            }}
+        >
             <View style={styles.imageWrapper}>
                 <Image
                     style={styles.image}
@@ -64,16 +77,16 @@ const SearchResults: React.FC<SearchResultsProps> = ({ queriedUsers }) => {
             color: colors[theme].colorText,
         },
     })
-    console.log('res', queriedUsers)
 
     return (
         <ScrollView>
-            {queriedUsers.map(({ profileImage, displayName, name }, i) => (
+            {queriedUsers.map(({ profileImage, displayName, name, uid }, i) => (
                 <UserResult
                     key={i}
                     profileImage={profileImage}
                     displayName={displayName}
                     name={name}
+                    uid={uid}
                 />
             ))}
         </ScrollView>

@@ -28,7 +28,6 @@ export default function SearchBar({ setQueryString }: Props): ReactElement {
         textInput: {
             marginLeft: 10,
             color: colors[theme].colorText,
-            backgroundColor: 'red',
             flex: 1,
         },
     })

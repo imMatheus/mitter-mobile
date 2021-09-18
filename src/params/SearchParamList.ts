@@ -4,7 +4,10 @@ import { RouteProp } from '@react-navigation/native'
 
 export type SearchParamList = {
     Search: undefined
-} & ProfileParamList
+    Profile: {
+        id: string
+    }
+}
 
 export type SearchStackNavProps<T extends keyof SearchParamList> = {
     navigation: StackNavigationProp<SearchParamList, T>

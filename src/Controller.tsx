@@ -43,31 +43,10 @@ const Controller = () => {
                 tabBar={(props) => {
                     return <TabBar {...props} />
                 }}
-                screenOptions={{
-                    headerLeft: () => (
-                        <Pressable
-                            style={{
-                                marginLeft: 20,
-                            }}
-                            onPress={() => alert('hej')}
-                        >
-                            <Image
-                                style={{
-                                    width: 35,
-                                    height: 35,
-                                    backgroundColor: '#3066d1',
-                                    borderRadius: 9999,
-                                }}
-                                source={{
-                                    uri: 'https://cdn.fakercloud.com/avatars/justinrhee_128.jpg',
-                                }}
-                            />
-                        </Pressable>
-                    ),
-                    headerStyle: {
-                        height: 100,
-                    },
-                }}
+                // screenOptions={{
+                //     header: () => null,
+                // }}
+                screenOptions={{ headerShown: false }}
             >
                 <Tab.Screen
                     name='Home'

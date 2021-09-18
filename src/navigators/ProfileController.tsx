@@ -5,7 +5,8 @@ import { SearchParamList } from '../params/SearchParamList'
 import Profile from '@screens/Profile'
 
 const ProfileController = (
-    Stack: TypedNavigator<HomeParamList | SearchParamList, any, any, any, any>
+    Stack: TypedNavigator<any, any, any, any, any>
+    // Stack: TypedNavigator<HomeParamList | SearchParamList, any, any, any, any>
 ) => {
     return (
         <>
